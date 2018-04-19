@@ -71,6 +71,53 @@ class Usuario {
 		}
 	}
 
+	//tras a lista de todos os usuários
+	public static function getList(){
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin");
+	}
+
+	public static function busca($login){
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :BUSCA ORDER BY deslogin", array(
+			':BUSCA'=>"%".$login."%"
+		));
+
+	}
+
+	public function login($login, $senha){
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * from tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :SENHA", array(
+
+			":LOGIN"=>$login,
+			":SENHA"=>$senha
+		));
+
+		if (count($results) > 0) {
+
+			$row = $results[0];
+
+			$this->setIdusuario($row['idusuario']);
+			$this->setLogin($row['deslogin']);
+			$this->setSenha($row['dessenha']);
+			$this->setDataCad(new DateTime($row['dtcadastro']));
+
+		} else {
+
+			throw new Exception("Login ou senha inválidos Maluco!!!");
+			
+		}
+
+
+
+	}
+
 
 	public function __toString(){
 
