@@ -61,12 +61,7 @@ class Usuario {
 
 		if (count($results) > 0) {
 
-			$row = $results[0];
-
-			$this->setIdusuario($row['idusuario']);
-			$this->setLogin($row['deslogin']);
-			$this->setSenha($row['dessenha']);
-			$this->setDataCad(new DateTime($row['dtcadastro']));
+			$this->setData($results[0]);
 
 		}
 	}
@@ -101,20 +96,38 @@ class Usuario {
 
 		if (count($results) > 0) {
 
-			$row = $results[0];
-
-			$this->setIdusuario($row['idusuario']);
-			$this->setLogin($row['deslogin']);
-			$this->setSenha($row['dessenha']);
-			$this->setDataCad(new DateTime($row['dtcadastro']));
+			$this->setData($results[0]);
 
 		} else {
 
 			throw new Exception("Login ou senha inválidos Maluco!!!");
 			
 		}
+	}
+
+	public function setData($data){
+
+		$this->setIdusuario($data['idusuario']);
+		$this->setLogin($data['deslogin']);
+		$this->setSenha($data['dessenha']);
+		$this->setDataCad(new DateTime($data['dtcadastro']));
 
 
+	}
+
+	public function inserir(){
+
+		$sql = new Sql();
+		//precisa  criar essa procedure dentro do banco de dados
+		//$results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
+		$results = $sql->select("INSERT INTO tb_usuarios (deslogin, dessenha) VALUES (:LOGIN, :SENHA)", array(
+				':LOGIN'=>$this->getLogin(),
+				':SENHA'=>$this->getSenha()
+		));
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}
 
 	}
 

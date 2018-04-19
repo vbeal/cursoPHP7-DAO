@@ -25,10 +25,18 @@ require_once("config.php");
 
 
 //Carrega Usuário e senha
+//$usuario = new Usuario();
+//$usuario->login($_GET['login'],$_GET['senha']);
+//echo $usuario;
 
-$usuario = new Usuario();
-$usuario->login($_GET['login'],$_GET['senha']);
+$aluno = new Usuario();
+$aluno->setLogin("aluno");
+$aluno->setSenha("@alu0");
+//ou poderia vir de um meto GET ou POST
+//$aluno->setLogin($_GET['login']);
+//$aluno->setSenha($_GET['senha']);
 
-echo $usuario;
+$aluno->inserir();
 
+echo $aluno;
 ?>
