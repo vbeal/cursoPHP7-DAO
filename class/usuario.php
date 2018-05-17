@@ -120,15 +120,31 @@ class Usuario {
 		$sql = new Sql();
 		//precisa  criar essa procedure dentro do banco de dados
 		//$results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
-		$results = $sql->select("INSERT INTO tb_usuarios (deslogin, dessenha) VALUES (:LOGIN, :SENHA)", array(
-				':LOGIN'=>$this->getLogin(),
-				':SENHA'=>$this->getSenha()
-		));
+		$results = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario = LAST_INSERT_ID()");
 
 		if (count($results) > 0) {
 			$this->setData($results[0]);
 		}
 
+	}
+
+	public function update($login, $senha){
+
+		$this->setLogin($login);
+		$this->setSenha($senha);
+
+		$sql = new Sql();
+		$sql->query("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :SENHA WHERE idusuario = :ID ", array(
+			':LOGIN'=>$this->getLogin(),
+			'SENHA'=>$this->getSenha(),
+			':ID'=>$this->getIdusuario()
+		));
+	}
+
+	public function __construct($login ="", $senha = ""){
+
+		$this->setLogin($login);
+		$this->setSenha($senha);
 	}
 
 

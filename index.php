@@ -29,14 +29,21 @@ require_once("config.php");
 //$usuario->login($_GET['login'],$_GET['senha']);
 //echo $usuario;
 
-$aluno = new Usuario();
-$aluno->setLogin("aluno");
-$aluno->setSenha("@alu0");
+//$aluno = new Usuario($_GET['login'],$_GET['senha']);
+//$aluno->setLogin("aluno2");
+//$aluno->setSenha("@alu011111");
 //ou poderia vir de um meto GET ou POST
 //$aluno->setLogin($_GET['login']);
 //$aluno->setSenha($_GET['senha']);
 
-$aluno->inserir();
+//$aluno->inserir();
 
-echo $aluno;
+//print_r($aluno);
+
+
+$usuario = new Usuario();
+
+$usuario->loadbyId(14);
+$usuario->update("Maluco","12das124");
+echo $usuario;
 ?>
