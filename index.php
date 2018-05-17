@@ -41,9 +41,17 @@ require_once("config.php");
 //print_r($aluno);
 
 
+/* Aletar um usuário 
 $usuario = new Usuario();
 
 $usuario->loadbyId(14);
 $usuario->update("Maluco","12das124");
+echo $usuario;
+*/
+
+$usuario = new Usuario();
+
+$usuario->loadbyId(10);
+$usuario->deletar();
 echo $usuario;
 ?>
